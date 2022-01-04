@@ -2,7 +2,7 @@ import {
     checkAuth, 
     getCharacter,
     logout, 
-    createCharacter,
+    createDefaultCharacter,
     updateBottom,
     updateHead,
     updateMiddle,
@@ -71,21 +71,16 @@ catchphraseButton.addEventListener('click', async() => {
 });
 
 window.addEventListener('load', async() => {
-    let character = await getCharacter;
+    const character = await getCharacter();
     // on load, attempt to fetch this user's character
     if (!character) {
-        character = await createCharacter({
-            head: '',
-            middle: '',
-            bottom: '',
-            catchphrases: [],
-        });
+        await createDefaultCharacter();
     }
     // if this user turns out not to have a character
     // create a new character with correct defaults for all properties (head, middle, bottom, catchphrases)
     // and put the character's catchphrases in state (we'll need to hold onto them for an interesting reason);
     
-    character.catchphrases = character.catchphrase;
+    
 
     // then call the refreshData function to set the DOM with the updated data
     refreshData();
